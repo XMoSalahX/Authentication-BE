@@ -1,0 +1,880 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>auth-backend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="./" class="navbar-brand">auth-backend documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1>Authentication Backend API</h1>
+<p>A comprehensive NestJS-based authentication backend API built with MongoDB, Redis, JWT authentication, and comprehensive security features.</p>
+<h2>📋 Table of Contents</h2>
+<ol>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#architecture">Architecture</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#installation--setup">Installation &amp; Setup</a></li>
+<li><a href="#environment-variables">Environment Variables</a></li>
+<li><a href="#api-documentation">API Documentation</a></li>
+<li><a href="#security-features">Security Features</a></li>
+<li><a href="#database-schema">Database Schema</a></li>
+<li><a href="#middleware--guards">Middleware &amp; Guards</a></li>
+<li><a href="#error-handling">Error Handling</a></li>
+<li><a href="#testing">Testing</a></li>
+<li><a href="#deployment">Deployment</a></li>
+</ol>
+<h2>🔍 Overview</h2>
+<p>This is a production-ready authentication system built with NestJS framework featuring:</p>
+<ul>
+<li><strong>JWT Authentication</strong> with access/refresh token mechanism</li>
+<li><strong>Email Verification</strong> with OTP</li>
+<li><strong>Role-based Access Control</strong> (RBAC)</li>
+<li><strong>Rate Limiting</strong> and <strong>Security Headers</strong></li>
+<li><strong>Multi-platform Support</strong> (Web, Mobile, Swagger)</li>
+<li><strong>Redis Caching</strong> for performance optimization</li>
+<li><strong>MongoDB</strong> for data persistence</li>
+<li><strong>Comprehensive Logging</strong> and error handling</li>
+</ul>
+<h2>🏗️ Architecture</h2>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">┌─────────────────┐
+│    Client App   │
+└─────────┬───────┘
+          │
+    ┌─────▼─────┐
+    │  Nginx    │  (Load Balancer/Reverse Proxy)
+    └─────┬─────┘
+          │
+    ┌─────▼─────┐
+    │ NestJS API │  (Authentication Service)
+    └─────┬─────┘
+          │
+    ┌─────▼─────┐    ┌──────────┐
+    │ MongoDB   │    │  Redis   │
+    │(Database) │    │ (Cache)  │
+    └───────────┘    └──────────┘</code></pre></div><h2>✨ Features</h2>
+<h3>Core Features</h3>
+<ul>
+<li>🔐 <strong>User Registration</strong> with email verification</li>
+<li>🔑 <strong>JWT-based Authentication</strong> with CSRF protection</li>
+<li>🔄 <strong>Token Refresh</strong> mechanism</li>
+<li>📧 <strong>Email Verification</strong> with OTP</li>
+<li>👥 <strong>Role-based Authorization</strong> (USER, SELLER, ADMIN, SUPER_ADMIN)</li>
+<li>🚫 <strong>Rate Limiting</strong> protection</li>
+<li>🛡️ <strong>Security Headers</strong> (Helmet.js)</li>
+<li>📱 <strong>Multi-platform Support</strong> (Web, iOS, Android, Swagger)</li>
+</ul>
+<h3>Advanced Features</h3>
+<ul>
+<li>⚡ <strong>Redis Caching</strong> for performance</li>
+<li>📊 <strong>Comprehensive Logging</strong></li>
+<li>🔍 <strong>API Documentation</strong> with Swagger</li>
+<li>🧪 <strong>Testing Suite</strong></li>
+<li>🐳 <strong>Docker Support</strong></li>
+<li>📈 <strong>Health Checks</strong></li>
+</ul>
+<h2>🚀 Installation &amp; Setup</h2>
+<h3>Prerequisites</h3>
+<ul>
+<li>Node.js (v18 or higher)</li>
+<li>MongoDB (v5.0 or higher)</li>
+<li>Redis (v6.0 or higher)</li>
+<li>npm or yarn</li>
+</ul>
+<h3>Installation</h3>
+<ol>
+<li><strong>Clone the repository</strong></li>
+</ol>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">git clone &lt;repository-url&gt;
+cd auth-backend</code></pre></div><ol start="2">
+<li><strong>Install dependencies</strong></li>
+</ol>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">npm install</code></pre></div><ol start="3">
+<li><strong>Setup environment variables</strong></li>
+</ol>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">cp .env.example .env
+# Edit .env with your configuration</code></pre></div><ol start="4">
+<li><strong>Start the services</strong></li>
+</ol>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash"># Development
+npm run start:dev
+
+# Production
+npm run build
+npm run start:prod</code></pre></div><h2>🔧 Environment Variables</h2>
+<p>Create a <code>.env</code> file in the root directory:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-env"># Server Configuration
+SERVER_PORT=80
+NODE_ENV=development
+
+# Swagger Configuration
+SWAGGER_ROUTE=api
+SWAGGER_USER=admin
+SWAGGER_PASSWORD=&quot;easy generator&quot;
+
+# API Documentation
+APP_DOCS=&quot;docs&quot;
+
+# MongoDB Configuration
+MONGODB_URI=mongodb+srv://username:password&#64;cluster.mongodb.net/database
+
+# Redis Configuration
+REDIS_USERNAME=default
+REDIS_PASSWORD=your_redis_password
+REDIS_HOST=your_redis_host
+REDIS_PORT=13492
+
+# Authentication Configuration
+SECRET_KEY=your_secret_key
+BCRYPT_PASSWORD=your_bcrypt_password
+SALT_ROUND=10
+JWT_SECRET=your_jwt_secret
+JWT_REFRESH_SECRET=your_jwt_refresh_secret
+JWT_CSRF_SECRET=your_jwt_csrf_secret
+JWT_Expiry=1d
+JWT_Refresh_Expiry=7d
+
+# Email Configuration
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USER=your_email&#64;gmail.com
+MAIL_PASS=your_app_password
+
+# Application Status
+APPLICATION_STATUS=2  # 0=stopped, 1=maintenance, 2=active
+ANDROID_CRITICAL_UPDATE=1
+IOS_CRITICAL_UPDATE=1</code></pre></div><h2>📚 API Documentation</h2>
+<h3>Base URL</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">http://localhost:80/v1</code></pre></div><h3>Authentication Headers</h3>
+<p>All protected endpoints require:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-http">Authorization: Bearer &lt;access_token&gt;  # For mobile apps
+csrf-token: &lt;csrf_token&gt;              # Required for all authenticated requests
+app: &lt;app_name&gt;                       # Application identifier
+version: &lt;app_version&gt;                # Application version
+os: &lt;operating_system&gt;                # Android|iOS|Web|Swagger|Elastic</code></pre></div><hr>
+<h2>🔗 API Endpoints</h2>
+<h3>1. Server Health Check</h3>
+<h4>GET <code>/</code></h4>
+<p>Check server status and health.</p>
+<p><strong>Request:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-http">GET / HTTP/1.1</code></pre></div><p><strong>Response:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">{
+  &quot;success&quot;: true,
+  &quot;message&quot;: &quot;Server is running&quot;,
+  &quot;data&quot;: {
+    &quot;status&quot;: &quot;healthy&quot;,
+    &quot;timestamp&quot;: &quot;2025-06-30T10:00:00Z&quot;
+  }
+}</code></pre></div><p><strong>Sequence Diagram:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-mermaid">sequenceDiagram
+    participant Client
+    participant AuthBackend
+    participant AppService
+
+    Client-&gt;&gt;AuthBackend: GET /
+    AuthBackend-&gt;&gt;AppService: serverChecking()
+    AppService--&gt;&gt;AuthBackend: Server status
+    AuthBackend--&gt;&gt;Client: 200 OK (Server healthy)</code></pre></div><hr>
+<h3>2. User Registration</h3>
+<h4>POST <code>/v1/auth/signup</code></h4>
+<p>Register a new user with email verification.</p>
+<p><strong>Request:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-http">POST /v1/auth/signup HTTP/1.1
+Content-Type: application/json
+
+{
+  &quot;fullName&quot;: &quot;John Doe&quot;,
+  &quot;email&quot;: &quot;john.doe&#64;example.com&quot;,
+  &quot;password&quot;: &quot;StrongP&#64;ss123&quot;,
+  &quot;role&quot;: &quot;USER&quot;
+}</code></pre></div><p><strong>Response:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">{
+  &quot;success&quot;: true,
+  &quot;message&quot;: &quot;User created successfully, please check your email for verification instructions.&quot;,
+  &quot;data&quot;: null
+}</code></pre></div><p><strong>Sequence Diagram:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-mermaid">sequenceDiagram
+    participant Client
+    participant AuthController
+    participant AuthService
+    participant UsersService
+    participant CacheService
+    participant MailerService
+    participant MongoDB
+    participant Redis
+
+    Client-&gt;&gt;AuthController: POST /v1/auth/signup
+    AuthController-&gt;&gt;AuthService: signUp(createUserDto)
+
+    AuthService-&gt;&gt;AuthService: Hash password
+    AuthService-&gt;&gt;UsersService: findOne(email, role)
+    UsersService-&gt;&gt;MongoDB: Query user
+    MongoDB--&gt;&gt;UsersService: User data (if exists)
+    UsersService--&gt;&gt;AuthService: User result
+
+    alt User already exists and active
+        AuthService--&gt;&gt;AuthController: Throw EMAIL_EXIST error
+    else User doesn&#39;t exist or not completed
+        AuthService-&gt;&gt;AuthService: generateOtp(4)
+        AuthService-&gt;&gt;CacheService: setCache(otp:email, otp, 300s)
+        CacheService-&gt;&gt;Redis: Store OTP
+        Redis--&gt;&gt;CacheService: Success
+
+        AuthService-&gt;&gt;MailerService: sendMail(email, subject, template)
+        MailerService--&gt;&gt;AuthService: Email sent
+
+        alt New user
+            AuthService-&gt;&gt;UsersService: create(userDto)
+            UsersService-&gt;&gt;MongoDB: Insert user
+            MongoDB--&gt;&gt;UsersService: User created
+        end
+
+        AuthService--&gt;&gt;AuthController: Success message
+    end
+
+    AuthController--&gt;&gt;Client: 201 Created</code></pre></div><hr>
+<h3>3. Email Verification</h3>
+<h4>PATCH <code>/v1/auth/verify-email</code></h4>
+<p>Verify user email with OTP.</p>
+<p><strong>Request:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-http">PATCH /v1/auth/verify-email HTTP/1.1
+Content-Type: application/json
+
+{
+  &quot;email&quot;: &quot;john.doe&#64;example.com&quot;,
+  &quot;otp&quot;: 1234
+}</code></pre></div><p><strong>Response:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">{
+  &quot;success&quot;: true,
+  &quot;message&quot;: &quot;Email verified successfully&quot;,
+  &quot;data&quot;: null
+}</code></pre></div><p><strong>Sequence Diagram:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-mermaid">sequenceDiagram
+    participant Client
+    participant AuthController
+    participant AuthService
+    participant CacheService
+    participant UsersService
+    participant MongoDB
+    participant Redis
+
+    Client-&gt;&gt;AuthController: PATCH /v1/auth/verify-email
+    AuthController-&gt;&gt;AuthService: verifyEmail(email, otp)
+
+    AuthService-&gt;&gt;CacheService: getCache(otp:email)
+    CacheService-&gt;&gt;Redis: Get stored OTP
+    Redis--&gt;&gt;CacheService: OTP value
+    CacheService--&gt;&gt;AuthService: Cached OTP
+
+    alt OTP not found or expired
+        AuthService--&gt;&gt;AuthController: Throw OTP_NOT_EXIST_OR_EXPIRED error
+    else OTP doesn&#39;t match
+        AuthService--&gt;&gt;AuthController: Throw OTP_NOT_MATCH error
+    else OTP valid
+        AuthService-&gt;&gt;UsersService: findOne(email, status=NOT_COMPLETED)
+        UsersService-&gt;&gt;MongoDB: Query user
+        MongoDB--&gt;&gt;UsersService: User data
+
+        AuthService-&gt;&gt;UsersService: updateStatus(userId, ACTIVE)
+        UsersService-&gt;&gt;MongoDB: Update user status
+        MongoDB--&gt;&gt;UsersService: Update success
+
+        AuthService--&gt;&gt;AuthController: Success message
+    end
+
+    AuthController--&gt;&gt;Client: 200 OK</code></pre></div><hr>
+<h3>4. User Sign In</h3>
+<h4>POST <code>/v1/auth/signin</code></h4>
+<p>Authenticate user and receive tokens.</p>
+<p><strong>Request:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-http">POST /v1/auth/signin HTTP/1.1
+Content-Type: application/json
+app: MyApp
+version: 1.0.0
+os: Web
+
+{
+  &quot;email&quot;: &quot;john.doe&#64;example.com&quot;,
+  &quot;password&quot;: &quot;StrongP&#64;ss123&quot;,
+  &quot;role&quot;: &quot;USER&quot;
+}</code></pre></div><p><strong>Response:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">{
+  &quot;success&quot;: true,
+  &quot;message&quot;: &quot;Sign in successful&quot;,
+  &quot;data&quot;: {
+    &quot;user&quot;: {
+      &quot;id&quot;: &quot;60d5ecb54b24a5001c8e4f8a&quot;,
+      &quot;fullName&quot;: &quot;JOHN DOE&quot;,
+      &quot;email&quot;: &quot;john.doe&#64;example.com&quot;,
+      &quot;role&quot;: &quot;USER&quot;,
+      &quot;userStatus&quot;: &quot;ACTIVE&quot;
+    }
+  }
+}</code></pre></div><p><strong>Response Headers:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-http">Set-Cookie: access_token=&lt;jwt_token&gt;; HttpOnly; Secure; SameSite=Strict
+Set-Cookie: refresh_token=&lt;refresh_token&gt;; HttpOnly; Secure; SameSite=Strict
+csrf-token: &lt;csrf_token&gt;</code></pre></div><p><strong>Sequence Diagram:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-mermaid">sequenceDiagram
+    participant Client
+    participant AuthController
+    participant JWTAuthGuard
+    participant AuthService
+    participant UsersService
+    participant CacheService
+    participant MongoDB
+    participant Redis
+
+    Client-&gt;&gt;AuthController: POST /v1/auth/signin
+    AuthController-&gt;&gt;JWTAuthGuard: canActivate()
+
+    JWTAuthGuard-&gt;&gt;UsersService: findOne(email, role)
+    UsersService-&gt;&gt;MongoDB: Query user
+    MongoDB--&gt;&gt;UsersService: User data
+
+    alt User not found
+        JWTAuthGuard--&gt;&gt;AuthController: Throw NOT_FOUND_USER error
+    else User deleted/blocked
+        JWTAuthGuard--&gt;&gt;AuthController: Throw USER_DELETED/BLOCKED error
+    else Valid user
+        JWTAuthGuard-&gt;&gt;JWTAuthGuard: bcrypt.compare(password, hashedPassword)
+
+        alt Password incorrect
+            JWTAuthGuard--&gt;&gt;AuthController: Throw PASSWORD_NOT_VALID error
+        else Password correct
+            JWTAuthGuard-&gt;&gt;JWTAuthGuard: Generate JWT tokens
+            Note over JWTAuthGuard: - Access Token (1d)&lt;br/&gt;- Refresh Token (7d)&lt;br/&gt;- CSRF Token (7d)
+
+            JWTAuthGuard-&gt;&gt;CacheService: setMultipleCache(refreshToken, 7d)
+            CacheService-&gt;&gt;Redis: Store refresh token
+
+            JWTAuthGuard-&gt;&gt;JWTAuthGuard: Check application status &amp; version
+            JWTAuthGuard--&gt;&gt;AuthController: Set user in request
+        end
+    end
+
+    AuthController-&gt;&gt;AuthService: signIn(headers, user, response)
+
+    alt Web/Swagger platform
+        AuthService-&gt;&gt;AuthService: Set HTTP-only cookies
+        AuthService-&gt;&gt;AuthService: Set CSRF header
+        AuthService-&gt;&gt;AuthService: Remove tokens from response
+    end
+
+    AuthService--&gt;&gt;AuthController: User data
+    AuthController--&gt;&gt;Client: 200 OK + Cookies + Headers</code></pre></div><hr>
+<h3>5. Check Authentication</h3>
+<h4>GET <code>/v1/auth/check-auth</code></h4>
+<p>Verify if user is authenticated.</p>
+<p><strong>Request:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-http">GET /v1/auth/check-auth HTTP/1.1
+Authorization: Bearer &lt;access_token&gt;
+csrf-token: &lt;csrf_token&gt;
+app: MyApp
+version: 1.0.0
+os: Web</code></pre></div><p><strong>Response:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">{
+  &quot;success&quot;: true,
+  &quot;message&quot;: &quot;User Authenticated&quot;,
+  &quot;data&quot;: null
+}</code></pre></div><p><strong>Sequence Diagram:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-mermaid">sequenceDiagram
+    participant Client
+    participant AuthController
+    participant JWTDecodedAuthGuard
+    participant JwtService
+    participant CacheService
+    participant Redis
+
+    Client-&gt;&gt;AuthController: GET /v1/auth/check-auth
+    AuthController-&gt;&gt;JWTDecodedAuthGuard: canActivate()
+
+    JWTDecodedAuthGuard-&gt;&gt;JWTDecodedAuthGuard: Extract tokens from request
+    Note over JWTDecodedAuthGuard: - Access token from cookies/headers&lt;br/&gt;- CSRF token from headers&lt;br/&gt;- Refresh token from cookies
+
+    JWTDecodedAuthGuard-&gt;&gt;JwtService: verify(csrfToken, csrfSecret)
+    JwtService--&gt;&gt;JWTDecodedAuthGuard: Decoded CSRF
+
+    JWTDecodedAuthGuard-&gt;&gt;JwtService: verify(accessToken, secret)
+    JwtService--&gt;&gt;JWTDecodedAuthGuard: Decoded user
+
+    alt Token expired and refresh token exists
+        JWTDecodedAuthGuard-&gt;&gt;JwtService: verify(refreshToken, refreshSecret)
+        JWTDecodedAuthGuard-&gt;&gt;CacheService: getCache(refreshToken)
+        CacheService-&gt;&gt;Redis: Check token validity
+        Redis--&gt;&gt;CacheService: Token status
+
+        alt Refresh token valid
+            JWTDecodedAuthGuard-&gt;&gt;JwtService: sign(newAccessToken)
+            JWTDecodedAuthGuard-&gt;&gt;JWTDecodedAuthGuard: Set new access token cookie
+        else Refresh token invalid
+            JWTDecodedAuthGuard--&gt;&gt;AuthController: Throw REFRESH_EXPIRED error
+        end
+    else Token valid
+        JWTDecodedAuthGuard-&gt;&gt;JWTDecodedAuthGuard: Validate CSRF token match
+        JWTDecodedAuthGuard-&gt;&gt;JWTDecodedAuthGuard: Check user status
+        JWTDecodedAuthGuard--&gt;&gt;AuthController: Set user in request
+    end
+
+    AuthController--&gt;&gt;Client: 200 OK</code></pre></div><hr>
+<h3>6. User Logout</h3>
+<h4>DELETE <code>/v1/auth/logout</code></h4>
+<p>Sign out user and invalidate tokens.</p>
+<p><strong>Request:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-http">DELETE /v1/auth/logout HTTP/1.1
+Authorization: Bearer &lt;access_token&gt;
+csrf-token: &lt;csrf_token&gt;
+app: MyApp
+version: 1.0.0
+os: Web</code></pre></div><p><strong>Response:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">{
+  &quot;success&quot;: true,
+  &quot;message&quot;: &quot;Logout successfully&quot;,
+  &quot;data&quot;: null
+}</code></pre></div><p><strong>Sequence Diagram:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-mermaid">sequenceDiagram
+    participant Client
+    participant AuthController
+    participant AuthService
+    participant JwtService
+    participant CacheService
+    participant Redis
+
+    Client-&gt;&gt;AuthController: DELETE /v1/auth/logout
+    AuthController-&gt;&gt;AuthService: logout(user, response, headers, refreshToken)
+
+    alt Mobile platform without refresh token
+        AuthService--&gt;&gt;AuthController: Throw BadRequestException
+    else Valid request
+        AuthService-&gt;&gt;CacheService: deleteCache(refreshToken)
+        CacheService-&gt;&gt;Redis: Delete refresh token
+        Redis--&gt;&gt;CacheService: Deletion success
+
+        alt Web/Swagger platform
+            AuthService-&gt;&gt;AuthService: Clear HTTP-only cookies
+            Note over AuthService: - Clear access_token cookie&lt;br/&gt;- Clear refresh_token cookie
+        else Mobile platform
+            AuthService-&gt;&gt;JwtService: verify(refreshToken, refreshSecret)
+            JwtService--&gt;&gt;AuthService: Decoded token
+
+            alt Token user mismatch
+                AuthService--&gt;&gt;AuthController: Throw NOT_ALLOWED error
+            end
+        end
+
+        AuthService--&gt;&gt;AuthController: Logout success
+    end
+
+    AuthController--&gt;&gt;Client: 200 OK + Cleared Cookies</code></pre></div><hr>
+<h3>7. Garbage Collection (Admin Only)</h3>
+<h4>GET <code>/gc</code></h4>
+<p>Trigger garbage collection (Super Admin only).</p>
+<p><strong>Request:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-http">GET /gc HTTP/1.1
+Authorization: Bearer &lt;access_token&gt;
+csrf-token: &lt;csrf_token&gt;
+app: MyApp
+version: 1.0.0
+os: Web</code></pre></div><p><strong>Response:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">{
+  &quot;success&quot;: true,
+  &quot;message&quot;: &quot;Garbage collector invoked&quot;,
+  &quot;data&quot;: null
+}</code></pre></div><p><strong>Sequence Diagram:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-mermaid">sequenceDiagram
+    participant Client
+    participant AppController
+    participant RolesGuard
+    participant AppService
+
+    Client-&gt;&gt;AppController: GET /gc
+    AppController-&gt;&gt;RolesGuard: Check SUPER_ADMIN role
+
+    alt User not SUPER_ADMIN
+        RolesGuard--&gt;&gt;AppController: Throw FORBIDDEN error
+    else User is SUPER_ADMIN
+        AppController-&gt;&gt;AppService: gc()
+        AppService-&gt;&gt;AppService: global.gc()
+        AppService--&gt;&gt;AppController: GC triggered
+        AppController--&gt;&gt;Client: 200 OK
+    end</code></pre></div><hr>
+<h2>🛡️ Security Features</h2>
+<h3>1. JWT Authentication</h3>
+<ul>
+<li><strong>Access Token</strong>: Short-lived (1 day) for API access</li>
+<li><strong>Refresh Token</strong>: Long-lived (7 days) for token renewal</li>
+<li><strong>CSRF Token</strong>: Prevents cross-site request forgery attacks</li>
+</ul>
+<h3>2. Password Security</h3>
+<ul>
+<li><strong>bcrypt Hashing</strong>: Passwords encrypted with salt rounds</li>
+<li><strong>Strong Password Policy</strong>: Minimum 8 characters with complexity requirements</li>
+</ul>
+<h3>3. Rate Limiting</h3>
+<ul>
+<li><strong>Global Rate Limit</strong>: 10 requests per minute per IP</li>
+<li><strong>Endpoint-specific Limits</strong>: 60 requests per minute for auth endpoints</li>
+</ul>
+<h3>4. Security Headers</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-javascript">helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: [&quot;&#39;self&#39;&quot;],
+    scriptSrc: [&quot;&#39;self&#39;&quot;],
+    styleSrc: [&quot;&#39;self&#39;&quot;, &#39;https:&#39;],
+    imgSrc: [&quot;&#39;self&#39;&quot;, &#39;data:&#39;, &#39;https:&#39;],
+    connectSrc: [&quot;&#39;self&#39;&quot;],
+    fontSrc: [&quot;&#39;self&#39;&quot;, &#39;https:&#39;],
+    objectSrc: [&quot;&#39;none&#39;&quot;],
+    upgradeInsecureRequests: [],
+  },
+});</code></pre></div><h3>5. CORS Configuration</h3>
+<ul>
+<li><strong>Environment-based Origins</strong>: Different allowed origins for development/production</li>
+<li><strong>Credentials Support</strong>: Secure cookie transmission</li>
+<li><strong>CSRF Token Exposure</strong>: Safe token sharing via headers</li>
+</ul>
+<hr>
+<h2>📊 Database Schema</h2>
+<h3>User Schema</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-typescript">{
+  _id: ObjectId,
+  fullName: String,      // Trimmed and uppercase getter
+  email: String,         // Unique with role
+  password: String,      // bcrypt hashed
+  role: UserRolesEnums,  // USER | SELLER | ADMIN | SUPER_ADMIN
+  userStatus: UserStatus, // ACTIVE | INACTIVE | BLOCKED | DELETED | NOT_COMPLETED
+  createdAt: Date,
+  updatedAt: Date
+}</code></pre></div><h3>Indexes</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-javascript">// Compound unique index
+{ email: 1, role: 1 } // unique: true
+
+// Performance indexes
+{ role: 1 }
+{ userStatus: 1 }
+{ email: 1 }</code></pre></div><hr>
+<h2>🔐 Middleware &amp; Guards</h2>
+<h3>1. Authentication Guards</h3>
+<h4>JWTDecodedAuthGuard</h4>
+<ul>
+<li><strong>Purpose</strong>: Validates JWT tokens and CSRF protection</li>
+<li><strong>Features</strong>:<ul>
+<li>Token extraction from cookies/headers</li>
+<li>CSRF token validation</li>
+<li>Automatic token refresh</li>
+<li>User status validation</li>
+</ul>
+</li>
+</ul>
+<h4>JWTAuthGuard</h4>
+<ul>
+<li><strong>Purpose</strong>: Sign-in authentication and token generation</li>
+<li><strong>Features</strong>:<ul>
+<li>Password validation</li>
+<li>JWT token generation</li>
+<li>Application status checks</li>
+<li>Platform-specific validations</li>
+</ul>
+</li>
+</ul>
+<h4>RolesGuard</h4>
+<ul>
+<li><strong>Purpose</strong>: Role-based access control</li>
+<li><strong>Features</strong>:<ul>
+<li>Role requirement validation</li>
+<li>Multiple role support</li>
+<li>Decorator-based configuration</li>
+</ul>
+</li>
+</ul>
+<h3>2. Middleware</h3>
+<h4>LoggerMiddleware</h4>
+<ul>
+<li><strong>Purpose</strong>: Request/response logging</li>
+<li><strong>Features</strong>:<ul>
+<li>Winston-based logging</li>
+<li>Request tracking</li>
+<li>Error logging</li>
+</ul>
+</li>
+</ul>
+<h4>SwaggerAuthMiddleware</h4>
+<ul>
+<li><strong>Purpose</strong>: Protect Swagger documentation</li>
+<li><strong>Features</strong>:<ul>
+<li>Basic authentication</li>
+<li>Environment-based credentials</li>
+</ul>
+</li>
+</ul>
+<h4>HeaderValidationGuard</h4>
+<ul>
+<li><strong>Purpose</strong>: Validate required headers</li>
+<li><strong>Features</strong>:<ul>
+<li>App identifier validation</li>
+<li>Version checking</li>
+<li>OS validation</li>
+</ul>
+</li>
+</ul>
+<h4>RateLimiterGuard</h4>
+<ul>
+<li><strong>Purpose</strong>: Request rate limiting</li>
+<li><strong>Features</strong>:<ul>
+<li>Redis-based storage</li>
+<li>IP-based limiting</li>
+<li>Configurable limits</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2>⚠️ Error Handling</h2>
+<h3>Error Types</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-typescript">enum ErrorTypes {
+  // Authentication Errors
+  INVALID_TOKEN = &#39;INVALID_TOKEN&#39;,
+  TOKEN_REQUIRED = &#39;TOKEN_REQUIRED&#39;,
+  REFRESH_EXPIRED = &#39;REFRESH_EXPIRED&#39;,
+
+  // User Errors
+  NOT_FOUND_USER = &#39;NOT_FOUND_USER&#39;,
+  EMAIL_EXIST = &#39;EMAIL_EXIST&#39;,
+  PASSWORD_NOT_VALID = &#39;PASSWORD_NOT_VALID&#39;,
+
+  // OTP Errors
+  OTP_NOT_EXIST_OR_EXPIRED = &#39;OTP_NOT_EXIST_OR_EXPIRED&#39;,
+  OTP_NOT_MATCH = &#39;OTP_NOT_MATCH&#39;,
+
+  // CSRF Errors
+  CSRF_TOKEN_REQUIRED = &#39;CSRF_TOKEN_REQUIRED&#39;,
+  CSRF_INVALID_TOKEN = &#39;CSRF_INVALID_TOKEN&#39;,
+  WRONG_CSRF_TOKEN = &#39;WRONG_CSRF_TOKEN&#39;,
+
+  // Authorization Errors
+  USER_BLOCKED = &#39;USER_BLOCKED&#39;,
+  USER_DELETED = &#39;USER_DELETED&#39;,
+  ACCOUNT_INACTIVE = &#39;ACCOUNT_INACTIVE&#39;,
+  NOT_ALLOWED = &#39;NOT_ALLOWED&#39;,
+
+  // Application Status
+  APPLICATION_STOPPED = &#39;APPLICATION_STOPPED&#39;,
+  APPLICATION_MAINTENANCE = &#39;APPLICATION_MAINTENANCE&#39;,
+  ANDROID_CRITICAL_UPDATE = &#39;ANDROID_CRITICAL_UPDATE&#39;,
+  IOS_CRITICAL_UPDATE = &#39;IOS_CRITICAL_UPDATE&#39;,
+}</code></pre></div><h3>Error Response Format</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">{
+  &quot;success&quot;: false,
+  &quot;message&quot;: &quot;Error description&quot;,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;ERROR_CODE&quot;,
+    &quot;details&quot;: &quot;Additional error information&quot;
+  }
+}</code></pre></div><hr>
+<h2>🧪 Testing</h2>
+<h3>Running Tests</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash"># Unit tests
+npm run test
+
+# End-to-end tests
+npm run test:e2e
+
+# Test coverage
+npm run test:cov
+
+# Test in watch mode
+npm run test:watch</code></pre></div><h3>Test Structure</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">test/
+├── unit/
+│   ├── auth/
+│   ├── users/
+│   └── cache/
+├── e2e/
+│   └── auth.e2e-spec.ts
+└── fixtures/
+    └── test-data.ts</code></pre></div><hr>
+<h2>🚀 Deployment</h2>
+<h3>Docker Deployment</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash"># Build image
+docker build -t auth-backend .
+
+# Run container
+docker run -p 80:80 --env-file .env auth-backend</code></pre></div><h3>Docker Compose</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-yaml">version: &#39;3.8&#39;
+services:
+  app:
+    build: .
+    ports:
+      - &#39;80:80&#39;
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - mongodb
+      - redis
+
+  mongodb:
+    image: mongo:5.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+
+  redis:
+    image: redis:6.0-alpine
+    command: redis-server --requirepass password</code></pre></div><h3>Production Checklist</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Environment variables configured</li>
+<li><input disabled="" type="checkbox"> Database connections established</li>
+<li><input disabled="" type="checkbox"> Redis cache configured</li>
+<li><input disabled="" type="checkbox"> SSL certificates installed</li>
+<li><input disabled="" type="checkbox"> CORS origins configured</li>
+<li><input disabled="" type="checkbox"> Rate limiting enabled</li>
+<li><input disabled="" type="checkbox"> Logging configured</li>
+<li><input disabled="" type="checkbox"> Health checks implemented</li>
+<li><input disabled="" type="checkbox"> Monitoring setup</li>
+<li><input disabled="" type="checkbox"> Backup strategy in place</li>
+</ul>
+<hr>
+<h2>📈 Monitoring &amp; Logging</h2>
+<h3>Health Checks</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-http">GET /health</code></pre></div><h3>Logging Levels</h3>
+<ul>
+<li><strong>Error</strong>: Application errors and exceptions</li>
+<li><strong>Warn</strong>: Warning messages and potential issues</li>
+<li><strong>Info</strong>: General application information</li>
+<li><strong>Debug</strong>: Detailed debugging information</li>
+</ul>
+<h3>Metrics</h3>
+<ul>
+<li>Request/response times</li>
+<li>Authentication success/failure rates</li>
+<li>Token refresh rates</li>
+<li>Cache hit/miss ratios</li>
+<li>Error rates by endpoint</li>
+</ul>
+<hr>
+<h2>🤝 Contributing</h2>
+<ol>
+<li>Fork the repository</li>
+<li>Create a feature branch (<code>git checkout -b feature/amazing-feature</code>)</li>
+<li>Commit your changes (<code>git commit -m &#39;Add some amazing feature&#39;</code>)</li>
+<li>Push to the branch (<code>git push origin feature/amazing-feature</code>)</li>
+<li>Open a Pull Request</li>
+</ol>
+<hr>
+<h2>📄 License</h2>
+<p>This project is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details.</p>
+<hr>
+<h2>📞 Support</h2>
+<p>For support, email <a href="mailto:support@example.com">support@example.com</a> or join our Slack channel.</p>
+<hr>
+<h2>🔗 Links</h2>
+<ul>
+<li><a href="https://docs.nestjs.com">NestJS Documentation</a></li>
+<li><a href="https://docs.mongodb.com">MongoDB Documentation</a></li>
+<li><a href="https://redis.io/documentation">Redis Documentation</a></li>
+<li><a href="https://jwt.io">JWT Documentation</a></li>
+</ul>
+<hr>
+<p><strong>Built with ❤️ using NestJS</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+
+       <script src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
