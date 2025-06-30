@@ -69,8 +69,6 @@ This is a production-ready authentication system built with NestJS framework fea
 - ⚡ **Redis Caching** for performance
 - 📊 **Comprehensive Logging**
 - 🔍 **API Documentation** with Swagger
-- 🧪 **Testing Suite**
-- 🐳 **Docker Support**
 - 📈 **Health Checks**
 
 ## 🚀 Installation & Setup
