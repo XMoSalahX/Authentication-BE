@@ -4,8 +4,6 @@ A comprehensive NestJS-based authentication backend API built with MongoDB, Redi
 
 ## 📋 Table of Contents
 
-A robust authentication system must balance performance, security, and user experience. By integrating Redis caching, the platform efficiently implements rate limiting, preventing brute-force attacks and abusive requests in real time, while also enabling fast and reliable token revocation—instantly invalidating compromised or outdated tokens across distributed systems. To mitigate XSS (Cross-Site Scripting) attacks, JWT tokens are securely stored and transmitted via HttpOnly cookies, ensuring they are inaccessible to client-side JavaScript and reducing the attack surface. Additionally, the use of CSRF tokens (Cross-Site Request Forgery) adds an extra layer of protection for state-changing operations, verifying that each request originates from a legitimate user session. The refresh token mechanism further enhances security and user experience by allowing seamless session renewal without exposing sensitive credentials, maintaining strong authentication flows across web and mobile platforms.
-
 1. [Overview](#overview)
 2. [Architecture](#architecture)
 3. [Features](#features)
@@ -18,6 +16,8 @@ A robust authentication system must balance performance, security, and user expe
 10. [Error Handling](#error-handling)
 
 ## 🔍 Overview
+
+A robust authentication system must balance performance, security, and user experience. By integrating Redis caching, the platform efficiently implements rate limiting, preventing brute-force attacks and abusive requests in real time, while also enabling fast and reliable token revocation—instantly invalidating compromised or outdated tokens across distributed systems. To mitigate XSS (Cross-Site Scripting) attacks, JWT tokens are securely stored and transmitted via HttpOnly cookies, ensuring they are inaccessible to client-side JavaScript and reducing the attack surface. Additionally, the use of CSRF tokens (Cross-Site Request Forgery) adds an extra layer of protection for state-changing operations, verifying that each request originates from a legitimate user session. The refresh token mechanism further enhances security and user experience by allowing seamless session renewal without exposing sensitive credentials, maintaining strong authentication flows across web and mobile platforms.
 
 This is a production-ready authentication system built with NestJS framework featuring:
 
@@ -205,12 +205,10 @@ GET / HTTP/1.1
 
 ```json
 {
-  "success": true,
-  "message": "Server is running",
-  "data": {
-    "status": "healthy",
-    "timestamp": "2025-06-30T10:00:00Z"
-  }
+  "statusCode": 201,
+  "message": "OK",
+  "flag": null,
+  "body": "SERVER WORKING"
 }
 ```
 
